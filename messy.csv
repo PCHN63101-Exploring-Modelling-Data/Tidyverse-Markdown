@@ -1,0 +1,10 @@
+﻿P,age,CongruentReactionTime,Incongruent RT,Edu,Completed
+P001,18,2.45,3.25,School,TRUE
+P002,19,1.89,2.99,UG,TRUE
+P003,,2.1,,PG,TRUE
+P004,20,3,4.21,pg,TRUE
+P005,22,2.1,3.96,UG,TRUE
+P005,22,2.1,3.96,UG,TRUE
+P006,-20,1.77,2.89,School,TRUE
+P007,eighteen,2.13,3.56,School,TRUE
+NA,21,2.89,3.91,UG,FALSE

@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Visualisation with ggplot2 &#8212; Tidyverse and R Markdown</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '4.ggplot2';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Reproducible Reporting" href="5.RMarkdown.html" />
+    <link rel="prev" title="Wrangling data with dplyr" href="3.dplyr.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0.intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Tidyverse and R Markdown - Home"/>
+    <script>document.write(`<img src="_static/logo.png" class="logo__image only-dark" alt="Tidyverse and R Markdown - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
+                    Introduction: Tidyverse & RMarkdown
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.Tidyverse.html">From Base R to the Tidyverse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.tidyr.html">Reshaping data with tidyr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.dplyr.html">Wrangling data with dplyr</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Visualisation with ggplot2</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5.RMarkdown.html">Reproducible Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Exploring-Modelling-Data/Tidyverse-Markdown" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Exploring-Modelling-Data/Tidyverse-Markdown/issues/new?title=Issue%20on%20page%20%2F4.ggplot2.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/4.ggplot2.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Visualisation with ggplot2</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#themes">Themes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faceting-plots">Faceting plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geoms">geoms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-summary-stats">Plotting summary stats</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="visualisation-with-ggplot2">
+<h1>Visualisation with ggplot2<a class="headerlink" href="#visualisation-with-ggplot2" title="Link to this heading">#</a></h1>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/ggplot2.png"><img alt="_images/ggplot2.png" src="_images/ggplot2.png" style="width: 126.05000000000001px; height: 145.55px;" /></a>
+</figure>
+<p>The last tidyverse package we will look at this week is <code class="docutils literal notranslate"><span class="pre">ggplot2</span></code> which is designed to make (tidy) data visualisation more effective. Let’s look at a simple scatter plot to get a sense of how <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code> works:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">ggplot2</span><span class="p">)</span>
+
+<span class="nf">ggplot</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_len</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flipper_len</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Warning message:
+“Removed 2 rows containing missing values or values outside the scale range
+(`geom_point()`).”
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/bdb77191602bfe7fe35e130cf7a78edaf0cea33b4311f73f070e843e9dbf6d74.png"><img alt="_images/bdb77191602bfe7fe35e130cf7a78edaf0cea33b4311f73f070e843e9dbf6d74.png" src="_images/bdb77191602bfe7fe35e130cf7a78edaf0cea33b4311f73f070e843e9dbf6d74.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code> function accepts the data you want to plot as the first argument (in this case <code class="docutils literal notranslate"><span class="pre">penguins</span></code>). The we specify the aesthetics (<code class="docutils literal notranslate"><span class="pre">aes</span></code>) which connect variables in the data to visual properties of the plot. In this case we have specified that we want to map <code class="docutils literal notranslate"><span class="pre">bill_len</span></code> on to the x axis and <code class="docutils literal notranslate"><span class="pre">flipper_len</span></code> on to the y axis. Then we add a geometry, in this case points using <code class="docutils literal notranslate"><span class="pre">+</span> <span class="pre">geom_point()</span></code>.</p>
+<p>Note the warning message above, this happened because there are <code class="docutils literal notranslate"><span class="pre">NA</span></code>s in the data. So before we go any further let’s deal with those.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="n">clean_penguins</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="n">penguins</span><span class="p">,</span>
+<span class="w">                         </span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">bill_len</span><span class="p">),</span>
+<span class="w">                         </span><span class="o">!</span><span class="nf">is.na</span><span class="p">(</span><span class="n">flipper_len</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s add some axis labels and colour the points by species of penguin:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_len</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flipper_len</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Bill Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Flipper Length (mm)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/fe0a19bd4ed544cd400fc2795537929e4290854543f3d20cb821b28b310a4a4c.png"><img alt="_images/fe0a19bd4ed544cd400fc2795537929e4290854543f3d20cb821b28b310a4a4c.png" src="_images/fe0a19bd4ed544cd400fc2795537929e4290854543f3d20cb821b28b310a4a4c.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>This is the same plot as before with a couple of tweaks. We have added <code class="docutils literal notranslate"><span class="pre">colour</span></code> to the aesthetics and mapped it onto the variable <code class="docutils literal notranslate"><span class="pre">species</span></code>. Then we added two additional layers which are the x axis labels and y axis labels. We can improve it further by adding more layers and aesthetics. Let’s make it more accessible by using shapes as well as colours. We can also add a trend line for each species.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_len</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flipper_len</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Bill Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Flipper Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;lm&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using formula = &#39;y ~ x&#39;
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/588c9f4d49f9ad7f41b18b87e8ef2cd5c02c9678e690e037fc8480c7676b09bc.png"><img alt="_images/588c9f4d49f9ad7f41b18b87e8ef2cd5c02c9678e690e037fc8480c7676b09bc.png" src="_images/588c9f4d49f9ad7f41b18b87e8ef2cd5c02c9678e690e037fc8480c7676b09bc.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Now we have <code class="docutils literal notranslate"><span class="pre">shape</span></code> mapped on to <code class="docutils literal notranslate"><span class="pre">species</span></code> as well as <code class="docutils literal notranslate"><span class="pre">colour</span></code> and we have added a linear trend line for each group.</p>
+<section id="themes">
+<h2>Themes<a class="headerlink" href="#themes" title="Link to this heading">#</a></h2>
+<p>The colours and fonts used in the plot are the defaults for <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code>, but you can easily try different styles by adding a theme layer:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_len</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flipper_len</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">,</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Bill Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Flipper Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;lm&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">theme_minimal</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using formula = &#39;y ~ x&#39;
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/5bea540593552995bd51d246cbe2f8f3e82dba31b15ad8a1cd1e038432a0e414.png"><img alt="_images/5bea540593552995bd51d246cbe2f8f3e82dba31b15ad8a1cd1e038432a0e414.png" src="_images/5bea540593552995bd51d246cbe2f8f3e82dba31b15ad8a1cd1e038432a0e414.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">theme_minimal()</span></code> does what the name suggests. There are other themes available to <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code> and there are packages that provide yet more. You can even make your own bespoke themes.</p>
+</section>
+<section id="faceting-plots">
+<h2>Faceting plots<a class="headerlink" href="#faceting-plots" title="Link to this heading">#</a></h2>
+<p>If you want a multi-panel plot, this is also easily achieved. Let’s have a separate scatter plot for each species.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_len</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">flipper_len</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_point</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Bill Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Flipper Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_smooth</span><span class="p">(</span><span class="n">method</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;lm&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>`geom_smooth()` using formula = &#39;y ~ x&#39;
+</pre></div>
+</div>
+<a class="reference internal image-reference" href="_images/ef7389a5ba25c0ca4c63f875b4ea4e423b9ca0c1427615bce9a92f879ef997bb.png"><img alt="_images/ef7389a5ba25c0ca4c63f875b4ea4e423b9ca0c1427615bce9a92f879ef997bb.png" src="_images/ef7389a5ba25c0ca4c63f875b4ea4e423b9ca0c1427615bce9a92f879ef997bb.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>All we have done here is take species out of the aesthetic and given it instead to the <code class="docutils literal notranslate"><span class="pre">facet_wrap()</span></code> layer. This means ggplot will produce as many panels as there are distinct values in the <code class="docutils literal notranslate"><span class="pre">species</span></code> variable. Note that by default, <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code> has given each panel the same scales to facilitate comparison.</p>
+</section>
+<section id="geoms">
+<h2>geoms<a class="headerlink" href="#geoms" title="Link to this heading">#</a></h2>
+<p>So far, we have only used the <code class="docutils literal notranslate"><span class="pre">geom_point()</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_smooth()</span></code> geometries, but there are many different geoms to choose from, including:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_histogram()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_boxplot()</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">geom_line()</span></code></p></li>
+</ul>
+<p>Different geoms will require different mappings in the <code class="docutils literal notranslate"><span class="pre">aes()</span></code>. A histogram only needs a variable to be mapped to the x axis for instance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">bill_len</span><span class="p">,</span><span class="w"> </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="w"> </span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_histogram</span><span class="p">(</span><span class="n">binwidth</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Bill Length (mm)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">facet_wrap</span><span class="p">(</span><span class="o">~</span><span class="n">species</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/61a4a590c6b0885d707f7bb8a1c1e92ba409f0cb14a9281871f8733a077ebf8f.png"><img alt="_images/61a4a590c6b0885d707f7bb8a1c1e92ba409f0cb14a9281871f8733a077ebf8f.png" src="_images/61a4a590c6b0885d707f7bb8a1c1e92ba409f0cb14a9281871f8733a077ebf8f.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>The same principles apply whatever the geom you are using. <code class="docutils literal notranslate"><span class="pre">aes()</span></code> supplies the variable : plot mapping, and then we add various layers to get the end result we want. I have used <code class="docutils literal notranslate"><span class="pre">fill</span></code> rather than <code class="docutils literal notranslate"><span class="pre">colour</span></code> here. Although <code class="docutils literal notranslate"><span class="pre">colour</span></code> would have worked fine, it refers to the outline colour, while <code class="docutils literal notranslate"><span class="pre">fill</span></code> refers to the inner colour of a shape. So <code class="docutils literal notranslate"><span class="pre">fill</span></code> tends to work better with a histogram.</p>
+</section>
+<section id="plotting-summary-stats">
+<h2>Plotting summary stats<a class="headerlink" href="#plotting-summary-stats" title="Link to this heading">#</a></h2>
+<p>Often we want to plot means and error bars, not just raw data points. There are two main options if that is your objective. You could use <code class="docutils literal notranslate"><span class="pre">group_by()</span></code> and <code class="docutils literal notranslate"><span class="pre">summarise()</span></code> to create your summary statistics and then pass that summary data to <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code>.</p>
+<p>Alternatively, there are also some summarising capabilities built in to <code class="docutils literal notranslate"><span class="pre">ggplot()</span></code> if you are working with the raw data. Let’s look at <code class="docutils literal notranslate"><span class="pre">body_mass</span></code> per <code class="docutils literal notranslate"><span class="pre">species</span></code> to demonstrate this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span><span class="n">body_mass</span><span class="p">,</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_jitter</span><span class="p">()</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Species&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Body Mass (g)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/bfb7f7a78b9e80f8d02515f0d5c940658369adfae7f27cf62f75a53a2f7b9a4c.png"><img alt="_images/bfb7f7a78b9e80f8d02515f0d5c940658369adfae7f27cf62f75a53a2f7b9a4c.png" src="_images/bfb7f7a78b9e80f8d02515f0d5c940658369adfae7f27cf62f75a53a2f7b9a4c.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>Here we have created a plot with <code class="docutils literal notranslate"><span class="pre">species</span></code> mapped to the x axis and <code class="docutils literal notranslate"><span class="pre">body_mass</span></code> mapped to the y axis. I have also mapped <code class="docutils literal notranslate"><span class="pre">species</span></code> on to <code class="docutils literal notranslate"><span class="pre">colour</span></code> so that it is clear which species each dot belongs to. I have used the <code class="docutils literal notranslate"><span class="pre">geom_jitter()</span></code> geom, which is the same as <code class="docutils literal notranslate"><span class="pre">geom_point()</span></code> but it has added some random noise to the x position, so that all the data points are not on top of each other. Try running the above code with <code class="docutils literal notranslate"><span class="pre">geom_point()</span></code> instead to see the difference.</p>
+<p>Now, if I want to plot a mean data point for each species I can add a <code class="docutils literal notranslate"><span class="pre">stat_summary()</span></code> layer:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-r notranslate"><div class="highlight"><pre><span></span><span class="nf">ggplot</span><span class="p">(</span><span class="n">clean_penguins</span><span class="p">,</span><span class="nf">aes</span><span class="p">(</span><span class="n">species</span><span class="p">,</span><span class="n">body_mass</span><span class="p">,</span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">species</span><span class="p">))</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">geom_jitter</span><span class="p">(</span><span class="n">alpha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.2</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">xlab</span><span class="p">(</span><span class="s">&quot;Species&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">ylab</span><span class="p">(</span><span class="s">&quot;Body Mass (g)&quot;</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">stat_summary</span><span class="p">(</span><span class="n">fun</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean</span><span class="p">,</span><span class="w"> </span><span class="n">geom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;point&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">shape</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">19</span><span class="p">)</span><span class="o">+</span>
+<span class="w">  </span><span class="nf">stat_summary</span><span class="p">(</span><span class="n">fun.data</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">mean_se</span><span class="p">,</span><span class="w"> </span><span class="n">geom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;errorbar&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0.1</span><span class="p">,</span><span class="w"> </span><span class="n">colour</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;black&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<a class="reference internal image-reference" href="_images/85f884e1d58f048c2f81fb6150715228a5bb3b3ea618731f0ea17aa45ea627c2.png"><img alt="_images/85f884e1d58f048c2f81fb6150715228a5bb3b3ea618731f0ea17aa45ea627c2.png" src="_images/85f884e1d58f048c2f81fb6150715228a5bb3b3ea618731f0ea17aa45ea627c2.png" style="width: 420px; height: 420px;" /></a>
+</div>
+</div>
+<p>For this plot I have used the <code class="docutils literal notranslate"><span class="pre">stat_summary()</span></code> layers to add a mean data point and error bars showing the standard error (SE). You may have noticed I also added an <code class="docutils literal notranslate"><span class="pre">alpha</span></code> parameter to <code class="docutils literal notranslate"><span class="pre">geom_jitter()</span></code>. This controls the transparency of the points. Making them a bit transparent helps give prominence to the means and it allows us to see where data points overlap. I also set the <code class="docutils literal notranslate"><span class="pre">width</span></code> parameter so that there is a little more space between the clouds of dots.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3.dplyr.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Wrangling data with dplyr</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="5.RMarkdown.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Reproducible Reporting</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#themes">Themes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#faceting-plots">Faceting plots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geoms">geoms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#plotting-summary-stats">Plotting summary stats</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr George Farmer & Dr Martyn McFarquhar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
