@@ -1,0 +1,622 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Reproducible Reporting &#8212; Tidyverse and R Markdown</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/test.css?v=90b7ad94" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '5.RMarkdown';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Summary" href="summary.html" />
+    <link rel="prev" title="Visualisation with ggplot2" href="4.ggplot2.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="0.intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.png" class="logo__image only-light" alt="Tidyverse and R Markdown - Home"/>
+    <img src="_static/logo.png" class="logo__image only-dark pst-js-only" alt="Tidyverse and R Markdown - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="0.intro.html">
+                    Introduction: Tidyverse & RMarkdown
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1.Tidyverse.html">From Base R to the Tidyverse</a></li>
+<li class="toctree-l1"><a class="reference internal" href="2.tidyr.html">Reshaping data with tidyr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3.dplyr.html">Wrangling data with dplyr</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4.ggplot2.html">Visualisation with ggplot2</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Reproducible Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="summary.html">Summary</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Exploring-Modelling-Data/Tidyverse-Markdown" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/PCHN63101-Exploring-Modelling-Data/Tidyverse-Markdown/issues/new?title=Issue%20on%20page%20%2F5.RMarkdown.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/5.RMarkdown.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Reproducible Reporting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#narrative-and-comments">Narrative and comments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-text-in-r-markdown">Formatting text in R Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inserting-r-code-into-r-markdown">Inserting R code into R Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knitting-the-document">Knitting the document</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="reproducible-reporting">
+<h1>Reproducible Reporting<a class="headerlink" href="#reproducible-reporting" title="Link to this heading">#</a></h1>
+<figure class="align-right">
+<a class="reference internal image-reference" href="_images/rmarkdown.png"><img alt="_images/rmarkdown.png" src="_images/rmarkdown.png" style="width: 126.05000000000001px; height: 145.55px;" />
+</a>
+</figure>
+<p>A key responsibility of a researcher or data scientist is communicating their findings and the analyses that support them. You may need to explain an analytical process to collaborators, prepare a report for your employer, or write a manuscript for submission to a scientific journal.</p>
+<p>You could simply share your R script, but code alone is often difficult to interpret, even for someone who is proficient in R. A better approach is to create a document that combines explanatory text with your R code and its outputs. This provides context for the analysis, explains how results should be interpreted, and makes the work easier to follow.</p>
+<p>R Markdown makes this possible by combining executable R code, the output it generates, and clearly formatted text in a single document. In R Markdown terminology, this explanatory text is called <em>narrative</em>.</p>
+<p>The web page you are reading now is written in Markdown.</p>
+<section id="narrative-and-comments">
+<h2>Narrative and comments<a class="headerlink" href="#narrative-and-comments" title="Link to this heading">#</a></h2>
+<p>Narrative text tells the story of an analysis. It explains the question being addressed, why a particular approach was chosen, the data and methods used, the main findings, and what those findings mean. It should give readers enough context to understand and evaluate the work without requiring them to read every line of code.</p>
+<p>Code comments, written with the <code class="docutils literal notranslate"><span class="pre">#</span></code> symbol, serve a different purpose. They help someone read, debug, or update the code. For example, a comment might explain why certain records were excluded, why missing values were handled in a particular way or what a complex calculation is doing.</p>
+<p>Use the report narrative to explain the analytical rationale and communicate results to the intended audience. Use comments to clarify parts of the code that would otherwise be confusing. Avoid repeating the same explanation in both places; instead, let each serve its distinct role.</p>
+</section>
+<section id="formatting-text-in-r-markdown">
+<h2>Formatting text in R Markdown<a class="headerlink" href="#formatting-text-in-r-markdown" title="Link to this heading">#</a></h2>
+<p>In RStudio you can start an R Markdown document by clicking on the new file button in the top left of the interface and selecting R Markdown. A pop-up box will then ask you to enter a title and select the format of your final report. We will mostly be using pdf, but you can also produce web pages or Word documents. Once you click OK, you will be presented with a template R Markdown document. Lines 1 to 6 contain the information you entered in the initial pop-up box and can be edited if needed. The rest of the document is there to provide some examples of how RMarkdown works, you can safely delete it.</p>
+<p>When the Markdown document is processed RStudio will look for certain special characters that tell it how to format the text. A single # creates a level 1 header, ## creates a level 2 header and so on.</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="gh"># Header 1</span>
+<span class="gu">## Header 2</span>
+</pre></div>
+</div>
+<p>Gets rendered as</p>
+<blockquote>
+<div><h1 class="rubric" id="header-1">Header 1</h1>
+<h2 class="rubric" id="header-2">Header 2</h2>
+</div></blockquote>
+<p>Placing ** either side of a word makes that word bold. A single * either side makes the word italicised.</p>
+<div class="highlight-Markdown notranslate"><div class="highlight"><pre><span></span><span class="gs">**bold**</span>
+
+<span class="ge">*italicised*</span>
+</pre></div>
+</div>
+<p>gets rendered as:</p>
+<blockquote>
+<div><p><strong>bold</strong></p>
+</div></blockquote>
+<blockquote>
+<div><p><em>italicised</em></p>
+</div></blockquote>
+<p>When you want to include a variable name or the name of a function it is customary to put a backtick either side of it so that it gets formatted as code.</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="sb">`mean()`</span>
+</pre></div>
+</div>
+<p>gets rendered as</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">mean()</span></code></p>
+</div></blockquote>
+<p>Note that the apostrophe ‘ and the backtick ` are not the same thing. Only backticks will format your text as code.</p>
+</section>
+<section id="inserting-r-code-into-r-markdown">
+<h2>Inserting R code into R Markdown<a class="headerlink" href="#inserting-r-code-into-r-markdown" title="Link to this heading">#</a></h2>
+<p>To include R code in your markdown document you need to add an R ‘chunk’. You do this by typing:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>```{r}
+
+```
+</pre></div>
+</div>
+<p>Anything you write in between the opening and closing ``` gets interpreted as R code. Again, those are backticks not apostrophes.</p>
+<p>Inside the brackets that start an R chunk you can specify parameters that affect what happens when that chunk is run.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Option</p></th>
+<th class="head"><p>Effect</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">=</span> <span class="pre">FALSE</span></code></p></td>
+<td><p>Hide the code; show output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">eval</span> <span class="pre">=</span> <span class="pre">FALSE</span></code></p></td>
+<td><p>Display the code but do not run it.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">include</span> <span class="pre">=</span> <span class="pre">FALSE</span></code></p></td>
+<td><p>Run the code but show neither code nor output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">results</span> <span class="pre">=</span> <span class="pre">&quot;hide&quot;</span></code></p></td>
+<td><p>Run code but hide printed output.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">warning</span> <span class="pre">=</span> <span class="pre">FALSE</span></code></p></td>
+<td><p>Suppress warnings in the rendered document.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">message</span> <span class="pre">=</span> <span class="pre">FALSE</span></code></p></td>
+<td><p>Suppress package/startup messages in the rendered document.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">error</span> <span class="pre">=</span> <span class="pre">TRUE</span></code></p></td>
+<td><p>Show errors in the rendered document and continue rendering.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">fig.width</span> <span class="pre">=</span> <span class="pre">7,</span> <span class="pre">fig.height</span> <span class="pre">=</span> <span class="pre">5</span></code></p></td>
+<td><p>Set plot dimensions.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>So if you wanted a chunk of code that suppressed messages and warnings from the console, you would write:</p>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span>```{r message = FALSE, warning = FALSE}
+
+```
+</pre></div>
+</div>
+<p>If you don’t set any parameters, the defaults mean that your code will be run, and the output will be displayed along with any warnings and messages.</p>
+</section>
+<section id="knitting-the-document">
+<h2>Knitting the document<a class="headerlink" href="#knitting-the-document" title="Link to this heading">#</a></h2>
+<p>Once you have written your markdown and chunks of R code, it is time to produce your pdf (or html or Word doc). You do this by pressing the knit button on the toolbar at the top of the pane.</p>
+<p>After a few seconds a preview will pop up of your pdf file (if your browser settings allow for it). The pdf will also appear in the files tab of output pane so you have access to it whenever you need it.</p>
+<p>If the resulting document is not to your liking, you can of course edit your markdown file and knit it again.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "r"
+        },
+        kernelOptions: {
+            name: "ir",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'ir'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="4.ggplot2.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Visualisation with ggplot2</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="summary.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Summary</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#narrative-and-comments">Narrative and comments</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#formatting-text-in-r-markdown">Formatting text in R Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inserting-r-code-into-r-markdown">Inserting R code into R Markdown</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#knitting-the-document">Knitting the document</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr George Farmer & Dr Martyn McFarquhar
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2026.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
